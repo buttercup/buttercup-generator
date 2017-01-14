@@ -1,0 +1,9 @@
+{
+  "name": "buttercup-generator",
+  "version": "0.0.1",
+  "description": "Password generator for Buttercup",
+  "main": "./lib/index.js",
+  "repository": "git@github.com:buttercup-pw/buttercup-generator.git",
+  "author": "Sallar Kaboli <sallar.kaboli@gmail.com>",
+  "license": "MIT"
+}
