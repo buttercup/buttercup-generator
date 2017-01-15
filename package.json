@@ -5,5 +5,9 @@
   "main": "./lib/index.js",
   "repository": "git@github.com:buttercup-pw/buttercup-generator.git",
   "author": "Sallar Kaboli <sallar.kaboli@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "mngen": "^1.0.0",
+    "password-generator": "^2.1.0"
+  }
 }
