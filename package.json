@@ -1,13 +1,30 @@
 {
-  "name": "buttercup-generator",
-  "version": "0.0.2",
+  "name": "@buttercup/generator",
+  "version": "0.0.3",
   "description": "Password generator for Buttercup",
   "main": "./lib/index.js",
-  "repository": "git@github.com:buttercup-pw/buttercup-generator.git",
+  "repository": "git@github.com:buttercup/buttercup-generator.git",
   "author": "Sallar Kaboli <sallar.kaboli@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "format": "prettier --write './lib/**/*.js'",
+    "test": "ava",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "./lib/**/*.js": [
+      "prettier --write",
+      "git add"
+    ]
+  },
   "dependencies": {
     "mngen": "^1.0.0",
-    "password-generator": "^2.1.0"
+    "password-generator": "^2.2.0"
+  },
+  "devDependencies": {
+    "ava": "^0.23.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^4.3.0",
+    "prettier": "^1.7.4"
   }
 }
