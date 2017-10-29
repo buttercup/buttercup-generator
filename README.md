@@ -6,6 +6,10 @@ A password generator for [Buttercup](https://github.com/buttercup/buttercup-desk
 
 ## Usage
 
+``` bash
+npm install @buttercup/generator --save
+```
+
 ``` js
 import { generate, generateWords } from '@buttercup/generator';
 
