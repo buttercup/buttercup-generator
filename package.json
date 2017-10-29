@@ -11,11 +11,14 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "./lib/**/*.js": ["prettier --write", "git add"]
+    "./lib/**/*.js": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "dependencies": {
     "mngen": "^1.0.0",
-    "password-generator": "^2.1.0"
+    "password-generator": "^2.2.0"
   },
   "devDependencies": {
     "husky": "^0.14.3",
