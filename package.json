@@ -8,6 +8,7 @@
   "license": "MIT",
   "scripts": {
     "format": "prettier --write './lib/**/*.js'",
+    "test": "ava",
     "precommit": "lint-staged"
   },
   "lint-staged": {
@@ -21,6 +22,7 @@
     "password-generator": "^2.2.0"
   },
   "devDependencies": {
+    "ava": "^0.23.0",
     "husky": "^0.14.3",
     "lint-staged": "^4.3.0",
     "prettier": "^1.7.4"
