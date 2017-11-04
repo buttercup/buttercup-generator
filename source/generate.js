@@ -2,6 +2,8 @@ const { generateRandomBatch, generateRandomNumbers, getRandomWords } = require("
 const { generateDefaultConfig } = require("./config.js");
 const { removeIdenticalNeighbours } = require("./tools.js");
 
+const MAX_RETRY_CALLS = 250;
+
 function chooseRandomCharacterSets(characterSetConfigurations, count) {
     const totalLength = characterSetConfigurations.reduce((total, next) => next.frequency + total, 0);
     return generateRandomNumbers(0, totalLength - 1)
@@ -20,10 +22,13 @@ function generateCharacterBasedPassword(config) {
         .filter(setName => randomCharConfig.enabledCharacterSets.includes(setName))
         .map(setName => randomCharConfig.characterSets[setName]);
     if (characterSets.length === 0) {
-        throw new Error("Unable to generate password: No characters in character set");
+        return Promise.reject(new Error("Unable to generate password: No characters in character set"));
     }
     const targetLength = randomCharConfig.length;
-    const buildPasswordContents = (currentParts = []) => {
+    const buildPasswordContents = (currentParts = [], calls = 1) => {
+        if (calls > MAX_RETRY_CALLS) {
+            throw new Error(`Unable to generate password: Maximum generation tries exceeded (${MAX_RETRY_CALLS}). Character set options may be too limited.`);
+        }
         if (currentParts.length < targetLength) {
             const charactersNeeded = targetLength - currentParts.length;
             return chooseRandomCharacterSets(characterSets, charactersNeeded)
@@ -34,18 +39,21 @@ function generateCharacterBasedPassword(config) {
                 })
                 .then(sets => {
                     currentParts.push(...sets);
-                    return buildPasswordContents(currentParts);
+                    return buildPasswordContents(currentParts, calls + 1);
                 });
         }
         return currentParts;
     };
-    const transformContentsToCharacters = passwordParts => {
+    const transformContentsToCharacters = (passwordParts, calls = 1) => {
+        if (calls > MAX_RETRY_CALLS) {
+            throw new Error(`Unable to generate password: Maximum generation tries exceeded (${MAX_RETRY_CALLS}). Character set options may be too limited.`);
+        }
         return generateRandomBatch(passwordParts.map(charSet => ({ min: 0, max: charSet.set.length - 1 })))
             .then(randomIndexes => randomIndexes.map((randomIndex, partIndex) => passwordParts[partIndex].set[randomIndex]))
             .then(characters => {
                 const password = characters.join("");
                 return !randomCharConfig.allowRepeatingCharacters && /(.)\1/.test(password) ?
-                    transformContentsToCharacters(passwordParts) :
+                    transformContentsToCharacters(passwordParts, calls + 1) :
                     password;
             });
     };

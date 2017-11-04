@@ -37,6 +37,12 @@ describe("generate", function() {
             });
         });
 
+        it("rejects when too many tries for generating a password", function() {
+            this.genericConfig.randomCharacters.enabledCharacterSets = ["SPACE"];
+            const work = generateCharacterBasedPassword(this.genericConfig);
+            return expect(work).to.eventually.be.rejectedWith(/Maximum.+exceeded/i);
+        });
+
     });
 
     describe("generateRandomWordPassword", function() {
