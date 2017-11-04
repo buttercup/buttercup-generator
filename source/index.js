@@ -1,7 +1,9 @@
-const { generateDefaultConfig } = require("./config.js");
+const { generateDefaultConfig: getConfig } = require("./config.js");
 const { generatePassword } = require("./generate.js");
+const { setRNG } = require("./random.js");
 
 module.exports = {
     generatePassword,
-    getConfig: generateDefaultConfig
+    getConfig,
+    setRNG
 };
