@@ -2,12 +2,23 @@ const { generateRandomBatch, generateRandomNumbers, getRandomWords } = require("
 const { generateDefaultConfig } = require("./config.js");
 const { removeIdenticalNeighbours } = require("./tools.js");
 
+function chooseRandomCharacterSets(characterSetConfigurations, count) {
+    const totalLength = characterSetConfigurations.reduce((total, next) => next.frequency + total, 0);
+    return generateRandomNumbers(0, totalLength - 1)
+        .then(randomNumbers => randomNumbers.map(steps => {
+            return characterSetConfigurations.find(charSet => {
+                steps -= charSet.frequency;
+                return (steps <= 0);
+            });
+        }));
+}
+
 function generateCharacterBasedPassword(config) {
     const { randomCharacters: randomCharConfig } = config;
     const characterSets = Object
         .keys(randomCharConfig.characterSets)
         .filter(setName => randomCharConfig.enabledCharacterSets.includes(setName))
-        .map(setName => randomCharConfig.characterSets[setName].set);
+        .map(setName => randomCharConfig.characterSets[setName]);
     if (characterSets.length === 0) {
         throw new Error("Unable to generate password: No characters in character set");
     }
@@ -15,8 +26,7 @@ function generateCharacterBasedPassword(config) {
     const buildPasswordContents = (currentParts = []) => {
         if (currentParts.length < targetLength) {
             const charactersNeeded = targetLength - currentParts.length;
-            return generateRandomNumbers(0, characterSets.length - 1, charactersNeeded)
-                .then(randomNumbers => randomNumbers.map(index => characterSets[index]))
+            return chooseRandomCharacterSets(characterSets, charactersNeeded)
                 .then(sets => {
                     return randomCharConfig.allowRepeatingSets ?
                         sets :
@@ -30,8 +40,8 @@ function generateCharacterBasedPassword(config) {
         return currentParts;
     };
     const transformContentsToCharacters = passwordParts => {
-        return generateRandomBatch(passwordParts.map(charSet => ({ min: 0, max: charSet.length - 1 })))
-            .then(randomIndexes => randomIndexes.map((randomIndex, partIndex) => passwordParts[partIndex][randomIndex]))
+        return generateRandomBatch(passwordParts.map(charSet => ({ min: 0, max: charSet.set.length - 1 })))
+            .then(randomIndexes => randomIndexes.map((randomIndex, partIndex) => passwordParts[partIndex].set[randomIndex]))
             .then(characters => {
                 const password = characters.join("");
                 return !randomCharConfig.allowRepeatingCharacters && /(.)\1/.test(password) ?

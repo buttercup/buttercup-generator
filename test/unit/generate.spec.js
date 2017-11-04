@@ -16,6 +16,27 @@ describe("generate", function() {
             });
         });
 
+        it("generates only uppercase letters when specified", function() {
+            this.genericConfig.randomCharacters.enabledCharacterSets = ["UPPERCASE"];
+            return generateCharacterBasedPassword(this.genericConfig).then(password => {
+                expect(password).to.match(/^[A-Z]+$/);
+            });
+        });
+
+        it("generates only lowercase letters when specified", function() {
+            this.genericConfig.randomCharacters.enabledCharacterSets = ["LOWERCASE"];
+            return generateCharacterBasedPassword(this.genericConfig).then(password => {
+                expect(password).to.match(/^[a-z]+$/);
+            });
+        });
+
+        it("generates only digits when specified", function() {
+            this.genericConfig.randomCharacters.enabledCharacterSets = ["DIGITS"];
+            return generateCharacterBasedPassword(this.genericConfig).then(password => {
+                expect(password).to.match(/^[0-9]+$/);
+            });
+        });
+
     });
 
     describe("generateRandomWordPassword", function() {
