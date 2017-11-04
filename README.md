@@ -36,6 +36,7 @@ For example, the following allows for generation of passwords that are 20 charac
 
 ```javascript
 const config = getConfig();
+config.randomCharacters.length = 20;
 config.randomCharacters.enabledCharacterSets = ["UPPERCASE", "LOWERCASE", "DIGITS"];
 generatePassword(config).then(password => {
     // do something with the password
