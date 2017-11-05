@@ -1,30 +1,35 @@
 {
   "name": "@buttercup/generator",
-  "version": "0.0.3",
-  "description": "Password generator for Buttercup",
-  "main": "./lib/index.js",
-  "repository": "git@github.com:buttercup/buttercup-generator.git",
-  "author": "Sallar Kaboli <sallar.kaboli@gmail.com>",
-  "license": "MIT",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "format": "prettier --write './lib/**/*.js'",
-    "test": "ava",
-    "precommit": "lint-staged"
+    "format": "prettier --write '{source,test}/**/*.js'",
+    "precommit": "lint-staged",
+    "test": "run-s test:format test:unit",
+    "test:format": "prettier-check '{source,test}/**/*.js'",
+    "test:unit": "mocha -r test/index.js 'test/unit/**/*.spec.js'"
   },
   "lint-staged": {
-    "./lib/**/*.js": [
+    "{source,test}/**/*.js": [
       "prettier --write",
       "git add"
     ]
   },
+  "author": "Buttercup <info@buttercup.pw>",
+  "license": "MIT",
   "dependencies": {
-    "mngen": "^1.0.0",
-    "password-generator": "^2.2.0"
+    "deep-freeze": "0.0.1",
+    "random-number-generator": "~1.0.2"
   },
   "devDependencies": {
-    "ava": "^0.23.0",
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
     "husky": "^0.14.3",
     "lint-staged": "^4.3.0",
-    "prettier": "^1.7.4"
+    "mocha": "^4.0.1",
+    "npm-run-all": "^4.1.1",
+    "prettier": "^1.7.4",
+    "prettier-check": "^2.0.0"
   }
 }
