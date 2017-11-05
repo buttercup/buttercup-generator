@@ -17,6 +17,10 @@
       "git add"
     ]
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/buttercup/buttercup-generator.git"
+  },
   "author": "Buttercup <info@buttercup.pw>",
   "license": "MIT",
   "dependencies": {
