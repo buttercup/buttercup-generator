@@ -6,6 +6,7 @@
   "scripts": {
     "format": "prettier --write '{source,test}/**/*.js'",
     "precommit": "lint-staged",
+    "pub": "np",
     "test": "run-s test:format test:unit",
     "test:format": "prettier-check '{source,test}/**/*.js'",
     "test:unit": "mocha -r test/index.js 'test/unit/**/*.spec.js'"
@@ -28,6 +29,7 @@
     "husky": "^0.14.3",
     "lint-staged": "^4.3.0",
     "mocha": "^4.0.1",
+    "np": "^2.16.1",
     "npm-run-all": "^4.1.1",
     "prettier": "^1.7.4",
     "prettier-check": "^2.0.0"
