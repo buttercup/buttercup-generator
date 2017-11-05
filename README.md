@@ -49,6 +49,8 @@ Similarly, you could enable the use of all character sets by using:
 config.randomCharacters.enabledCharacterSets = Object.keys(config.randomCharacters.characterSets);
 ```
 
+**Important note**: Limiting the character sets, as well as enforcing strict non-repeat rules, may cause the password generator to throw. You should gracefully handle thrown errors in any interface this component is used.
+
 #### Random word configuration
 After setting `config.mode` to "words", you can use the `config.randomWords` object to configure the generation. Set the number of generated words by using `config.randomWords.length` to the desired count. The words are joined by the string `config.randomWords.separator`.
 
