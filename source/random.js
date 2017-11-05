@@ -13,7 +13,9 @@ function generateRandomBatch(items) {
 
 function generateRandomNumbers(lowerBound, upperBound, count = 1) {
     if (count < 1) {
-        throw new Error(`Must generate at least 1 random number: ${count} requested`);
+        throw new Error(
+            `Must generate at least 1 random number: ${count} requested`
+        );
     }
     const work = [];
     const generateRandomNumberBatch = getRNG();
@@ -25,7 +27,9 @@ function generateRandomNumbers(lowerBound, upperBound, count = 1) {
 
 function getRandomWords(count) {
     if (count < 1) {
-        throw new Error(`Must generate at least 1 random word: ${count} requested`);
+        throw new Error(
+            `Must generate at least 1 random word: ${count} requested`
+        );
     }
     const wordCount = words.length;
     const work = [];
@@ -33,7 +37,9 @@ function getRandomWords(count) {
     for (let i = 0; i < count; i += 1) {
         work.push({ min: 0, max: wordCount - 1 });
     }
-    return generateRandomNumberBatch(work).then(indexes => indexes.map(index => words[index]));
+    return generateRandomNumberBatch(work).then(indexes =>
+        indexes.map(index => words[index])
+    );
 }
 
 function getRNG() {
