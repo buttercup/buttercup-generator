@@ -1,6 +1,6 @@
 # Buttercup Password Generator 
 
-[![Build Status](https://travis-ci.org/buttercup/buttercup-generator.svg?branch=master)](https://travis-ci.org/buttercup/buttercup-generator)
+[![Build Status](https://travis-ci.org/buttercup/buttercup-generator.svg?branch=master)](https://travis-ci.org/buttercup/buttercup-generator) [![npm version](https://badge.fury.io/js/%40buttercup%2Fgenerator.svg)](https://www.npmjs.com/package/@buttercup/generator)
 
 A password generator that's used in [Buttercup](https://github.com/buttercup).
 
