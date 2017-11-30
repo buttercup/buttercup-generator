@@ -1,8 +1,8 @@
 {
   "name": "@buttercup/generator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "NodeJS password generator",
-  "main": "index.js",
+  "main": "source/index.js",
   "scripts": {
     "format": "prettier --write '{source,test}/**/*.js'",
     "precommit": "lint-staged",
