@@ -1,5 +1,10 @@
 # Buttercup Generator Changelog
 
+## v1.2.0
+_2018-03-14_
+
+ * Add error codes
+
 ## v1.1.0
 _2018-03-14_
 
