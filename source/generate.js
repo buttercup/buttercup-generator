@@ -6,7 +6,7 @@ const {
 const { generateDefaultConfig } = require("./config.js");
 const { removeIdenticalNeighbours } = require("./tools.js");
 
-const MAX_RETRY_CALLS = 250;
+const MAX_RETRY_CALLS = 1000;
 
 function chooseRandomCharacterSets(characterSetConfigurations, count) {
     const totalLength = characterSetConfigurations.reduce(
