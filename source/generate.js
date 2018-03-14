@@ -31,18 +31,20 @@ function generateCharacterBasedPassword(config) {
         )
         .map(setName => randomCharConfig.characterSets[setName]);
     if (characterSets.length === 0) {
-        return Promise.reject(
-            new Error(
-                "Unable to generate password: No characters in character set"
-            )
+        const noCharSetsError = new Error(
+            "Unable to generate password: No characters in character set"
         );
+        noCharSetsError.code = "NO_CHARSETS";
+        return Promise.reject(noCharSetsError);
     }
     const targetLength = randomCharConfig.length;
     const buildPasswordContents = (currentParts = [], calls = 1) => {
         if (calls > MAX_RETRY_CALLS) {
-            throw new Error(
+            const maxRetryErr = new Error(
                 `Unable to generate password: Maximum generation tries exceeded (${MAX_RETRY_CALLS}). Character set options may be too limited.`
             );
+            maxRetryErr.code = "MAX_RETRIES";
+            throw maxRetryErr;
         }
         if (currentParts.length < targetLength) {
             const charactersNeeded = targetLength - currentParts.length;
@@ -61,9 +63,11 @@ function generateCharacterBasedPassword(config) {
     };
     const transformContentsToCharacters = (passwordParts, calls = 1) => {
         if (calls > MAX_RETRY_CALLS) {
-            throw new Error(
+            const maxRetryErr = new Error(
                 `Unable to generate password: Maximum generation tries exceeded (${MAX_RETRY_CALLS}). Character set options may be too limited.`
             );
+            maxRetryErr.code = "MAX_RETRIES";
+            throw maxRetryErr;
         }
         return generateRandomBatch(
             passwordParts.map(charSet => ({
@@ -94,8 +98,13 @@ function generatePassword(config = generateDefaultConfig()) {
             return generateCharacterBasedPassword(config);
         case "words":
             return generateRandomWordPassword(config);
-        default:
-            throw new Error(`Unknown generation mode: ${config.mode}`);
+        default: {
+            const unknownModeError = new Error(
+                `Unknown generation mode: ${config.mode}`
+            );
+            unknownModeError.code = "BAD_MODE";
+            throw unknownModeError;
+        }
     }
 }
 
