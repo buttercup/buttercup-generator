@@ -44,7 +44,7 @@ function generateCharacterBasedPassword(config) {
                 `Unable to generate password: Maximum generation tries exceeded (${MAX_RETRY_CALLS}). Character set options may be too limited.`
             );
             maxRetryErr.code = "MAX_RETRIES";
-            throw max;
+            throw maxRetryErr;
         }
         if (currentParts.length < targetLength) {
             const charactersNeeded = targetLength - currentParts.length;
@@ -67,7 +67,7 @@ function generateCharacterBasedPassword(config) {
                 `Unable to generate password: Maximum generation tries exceeded (${MAX_RETRY_CALLS}). Character set options may be too limited.`
             );
             maxRetryErr.code = "MAX_RETRIES";
-            throw max;
+            throw maxRetryErr;
         }
         return generateRandomBatch(
             passwordParts.map(charSet => ({
