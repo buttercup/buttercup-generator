@@ -1,5 +1,10 @@
 # Buttercup Generator Changelog
 
+## v2.0.0
+_2021-03-18_
+
+ * New RNG core
+
 ## v1.2.0
 _2018-03-14_
 
