@@ -7,7 +7,7 @@
     "format": "prettier --write '{source,test}/**/*.js'",
     "precommit": "lint-staged",
     "pub": "np",
-    "test": "run-s test:format test:unit",
+    "test": "run-s test:unit test:format",
     "test:format": "prettier-check '{source,test}/**/*.js'",
     "test:unit": "mocha -r test/index.js 'test/unit/**/*.spec.js'"
   },
@@ -24,8 +24,8 @@
   "author": "Buttercup <info@buttercup.pw>",
   "license": "MIT",
   "dependencies": {
-    "deep-freeze": "0.0.1",
-    "random-number-generator": "~1.0.2"
+    "brorand": "^1.1.0",
+    "deep-freeze": "0.0.1"
   },
   "devDependencies": {
     "chai": "^4.1.2",

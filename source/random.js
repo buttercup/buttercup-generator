@@ -1,8 +1,10 @@
-const random = require("random-number-generator");
+const randomBytes = require("brorand");
 const words = require("../resources/words.json");
 
 const __builtInRNG = items => {
-    return Promise.resolve(items.map(item => random(item.max, item.min)));
+    return Promise.resolve(
+        items.map(item => getRandomNumberFromBytes(item.min, item.max))
+    );
 };
 
 let __rng;
@@ -23,6 +25,22 @@ function generateRandomNumbers(lowerBound, upperBound, count = 1) {
         work.push({ min: lowerBound, max: upperBound });
     }
     return generateRandomNumberBatch(work);
+}
+
+function getRandomNumberFromBytes(min, max) {
+    const size = max - min;
+    if (size === 0) {
+        return min;
+    } else if (size < 0) {
+        throw new Error(
+            `Invalid boundaries for random number: ${min} - ${max}`
+        );
+    }
+    const maxNum8 = new Uint8Array([255, 255, 255, 255]);
+    const [maxNum] = new Uint32Array(maxNum8.buffer);
+    const randBytes = randomBytes(4);
+    const [randNum] = new Uint32Array(randBytes.buffer);
+    return Math.floor(randNum / maxNum * size) + min;
 }
 
 function getRandomWords(count) {
